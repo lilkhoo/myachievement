@@ -44,6 +44,18 @@ function tambahkeun($data)
    return mysqli_affected_rows($koneksi);
 }
 
+function editdata($data)
+{
+   global $koneksi;
+   $id = $_GET['id'];
+   $course = $data['course'];
+   $penyelenggara = $data['penyelenggara'];
+
+   $result = mysqli_query($koneksi, "UPDATE tb_sertifikat SET course='$course', penyelenggara='$penyelenggara' where id=$id");
+
+   return mysqli_affected_rows($koneksi);
+}
+
 function upload($type)
 {
 
