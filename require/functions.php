@@ -50,8 +50,16 @@ function editdata($data)
    $id = $_GET['id'];
    $course = $data['course'];
    $penyelenggara = $data['penyelenggara'];
+   $gambarlama = htmlspecialchars($data["gambarlama"]);
 
-   $result = mysqli_query($koneksi, "UPDATE tb_sertifikat SET course='$course', penyelenggara='$penyelenggara' where id=$id");
+   if ($_FILES['gambar']['error'] === 4) {
+      $gambar = $gambarlama;
+   } else {
+      $gambar = upload("sertifikat");
+   }
+
+
+   mysqli_query($koneksi, "UPDATE tb_sertifikat SET course='$course', penyelenggara='$penyelenggara', gambar = '$gambar' where id=$id");
 
    return mysqli_affected_rows($koneksi);
 }

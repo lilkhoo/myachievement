@@ -8,7 +8,6 @@ if (isset($_POST["submit"])) {
     $penyelenggara = $_POST['penyelenggara'];
 
     if (editdata($_POST) > 0) {
-        mysqli_query($koneksi, "INSERT INTO `tb_sertifikat`(`id`, `course`, `penyelenggara`) VALUES ('', '$course', '$penyelenggara')");
         echo "
                 <script>
                     alert('simpan data sukses!');
@@ -18,7 +17,7 @@ if (isset($_POST["submit"])) {
         echo "
                 <script>
                     alert('simpan data gagal!');
-                    document.location='ubah.php';
+                    document.location='../app/';
                 </script>";
     }
 }
@@ -33,10 +32,6 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body>
-    <header>
-        <h3>Edit Data</h3>
-    </header>
-    <br><br><br><br><br>
     <article>
         <a href="../app/index.php">&#8656;Kembali</a>
         <div>
@@ -45,13 +40,14 @@ if (isset($_POST["submit"])) {
             $data = mysqli_query($koneksi, "SELECT * FROM tb_sertifikat WHERE id='$id'");
             while ($d = mysqli_fetch_array($data)) {
             ?>
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <table>
+                        <input type="hidden" name="gambarlama" value="<?= $d["gambar"]; ?>">
                         <tr>
-                            <th colspan="3" class="judul2">Edit Data ucup</th>
+                            <th colspan="3" class="judul2">Edit Data</th>
                         </tr>
                         <tr>
-                            <td>course</td>
+                            <td>Course</td>
                             <td>:</td>
                             <td>
                                 <input type="hidden" name="id" value="<?php echo $d['id']; ?>">
@@ -59,9 +55,14 @@ if (isset($_POST["submit"])) {
                             </td>
                         </tr>
                         <tr>
-                            <td>penyelenggara</td>
+                            <td>Penyelenggara</td>
                             <td>:</td>
                             <td><input type="text" name="penyelenggara" value="<?php echo $d['penyelenggara']; ?>"></td>
+                        </tr>
+                        <tr>
+                            <td>Gambar : </td>
+                            <td>:</td>
+                            <td><input type="file" name="gambar" value="<?= $d['gambar']; ?>"></td>
                         </tr>
                         <tr>
                             <td colspan="3" align="center"><button name="submit">Edit Data</button></td>

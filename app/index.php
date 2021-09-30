@@ -14,8 +14,6 @@ $serti = query("SELECT * FROM tb_sertifikat");
 </head>
 
 <body>
-   <a href="halamanAbi.php">Abi</a>
-   <a href="halamanMada.php">Mada</a>
 
    <h1>EKO PUNYA</h1>
    <a href="tambahSerti.php">+Sertifikat</a>
