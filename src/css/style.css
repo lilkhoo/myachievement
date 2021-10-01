@@ -19,11 +19,11 @@ html, body, #container {
 }
 
 .btn-edit {
-  @apply py-2 font-medium px-5 bg-yellow-500 text-white text-center rounded-md ring ring-offset-2 ring-transparent focus:ring-my-pink transition-all duration-300;
+  @apply py-2 font-medium px-5 bg-yellow-500 text-white text-center cursor-pointer rounded-md ring ring-offset-2 ring-transparent focus:ring-yellow-500 transition-all duration-300;
 }
 
 .btn-delete {
-  @apply py-2 font-medium px-5 bg-red-600 text-white text-center rounded-md ring ring-offset-2 ring-transparent focus:ring-my-pink transition-all duration-300;
+  @apply py-2 font-medium px-5 bg-red-600 text-white text-center cursor-pointer rounded-md ring ring-offset-2 ring-transparent focus:ring-red-600 transition-all duration-300;
 }
 
 .btn-ghost {

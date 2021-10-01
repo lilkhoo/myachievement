@@ -65,8 +65,8 @@ if (isset($_POST["tambah"])) {
                               <a class="main__certificate-from" href="#" target="_blank" rel="noopener noreferrer"><?= $row['penyelenggara']; ?></a>
                            </div>
                            <div>
-                              <button class="btn-edit">Edit</button>
-                              <button class="btn-delete">Hapus</button>
+                              <button data-id="<?= $row['id']; ?>" onclick="editBtn(this);" class="btn-edit modal-edit-open">Edit</button>
+                              <button class="btn-delete" data-id="<?= $row['id']; ?>" onclick="hapusData(this);">Hapus</button>
                            </div>
                         </div>
                      </div>
@@ -82,7 +82,7 @@ if (isset($_POST["tambah"])) {
             <form class="modal__form" id="form-tambah" method="POST" action="" enctype="multipart/form-data">
                <div class="grid">
                   <label class="btn" for="sertifikat">Klik Untuk Pilih Sertifikat</label>
-                  <input type="file" name="gambar" id="sertifikat" data-form-tambah="sertifikat" accept="image/*" class="input-file">
+                  <input type="file" name="gambar" id="sertifikat" data-form-tambah="sertifikat" accept="image/*" class="input-file sertifikat">
                   <small class="error-message">Error Message</small>
                </div>
                <img class="modal__up-img" data-sertifikat src="" alt="">
@@ -98,7 +98,34 @@ if (isset($_POST["tambah"])) {
                </div>
                <div class="flex gap-2">
                   <button type="submit" name="tambah" class="btn">Tambah</button>
-                  <button type="reset" class="btn-ghost btn-batal">Batal</button>
+                  <button type="reset" class="btn-ghost btn-batal" onclick="modalClose();">Batal</button>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div class="modal" id="modal-edit">
+         <div class="modal__container">
+            <form class="modal__form" id="form-edit" method="POST" action="" enctype="multipart/form-data">
+               <div class="grid">
+                  <label class="btn-edit" for="sertifikatEdit">Klik Untuk Ganti Sertifikat</label>
+                  <input type="file" name="gambar" id="sertifikatEdit" data-form-edit="sertifikat" accept="image/*" class="input-file sertifikat">
+                  <small class="error-message">Error Message</small>
+               </div>
+               <img class="modal__up-img" data-sertifikat data-sertifikat-edit alt="">
+               <div>
+                  <label class="akun__form-label" for="courseEdit">Course :</label>
+                  <input class="input" type="text" name="course" data-form-edit="course" value="" id="courseEdit">
+                  <small class="error-message">Error Message</small>
+               </div>
+               <div>
+                  <label class="akun__form-label" for="penyelenggaraEdit">Penyelenggara :</label>
+                  <input class="input" type="text" name="penyelenggara" data-form-edit="penyelenggara" value="" id="penyelenggaraEdit">
+                  <small class="error-message">Error Message</small>
+               </div>
+               <input type="hidden" name="id" id="idEdit">
+               <div class="flex gap-2">
+                  <button type="submit" name="edit" class="btn-edit">Edit</button>
+                  <button type="reset" class="btn-ghost btn-batal" onclick="modalClose();">Batal</button>
                </div>
             </form>
          </div>
@@ -112,25 +139,34 @@ if (isset($_POST["tambah"])) {
          <div></div>
       </div>
    </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script>
       const btnTambah = document.querySelector('#btn-tambah');
       const btnBatal = document.querySelectorAll('.btn-batal');
       const modalTambah = document.querySelector('#modal-tambah');
+      const modalEdit = document.querySelector('#modal-edit');
       const modalContainerTambah = modalTambah.querySelector('.modal__container');
+      const modalContainerEdit = modalEdit.querySelector('.modal__container');
+      const modalFormEdit = modalEdit.querySelector('.modal__form');
       const modalContainer = document.querySelectorAll('.modal__container');
-      const sertifikat = document.querySelector('#sertifikat');
-      const dataSertifikat = document.querySelector('[data-sertifikat]');
+      const sertifikat = document.querySelectorAll('.sertifikat');
+      const dataSertifikat = document.querySelectorAll('[data-sertifikat]');
       const formTambah = document.querySelector('#form-tambah');
       const loaderWrapper = document.querySelector('.loader-wrapper');
       const errorMessage = document.querySelectorAll('.error-message');
       const allInput = document.querySelectorAll('.input');
       const mainCertificates = document.querySelector('.main__certificates');
+      const btnEdit = document.querySelectorAll('.btn-edit');
 
-      sertifikat.addEventListener('change', () => {
-         const [file] = sertifikat.files;
-         if (file) {
-            dataSertifikat.src = URL.createObjectURL(file);
-         }
+      sertifikat.forEach(el => {
+         el.addEventListener('change', () => {
+            const [file] = el.files;
+            if (file) {
+               dataSertifikat.forEach(element => {
+                  element.src = URL.createObjectURL(file);
+               });
+            }
+         });
       });
 
       btnTambah.addEventListener('click', () => {
@@ -138,22 +174,48 @@ if (isset($_POST["tambah"])) {
          modalContainerTambah.classList.add('show');
       });
 
-      btnBatal.forEach(el => {
-         el.addEventListener('click', () => {
-            modalTambah.classList.remove('show');
-            modalContainer.forEach(element => {
-               element.classList.remove('show');
-            });
-            dataSertifikat.src = '';
-            errorMessage.forEach(element => {
-               element.classList.remove('show');
-            });
-            allInput.forEach(element => {
-               element.classList.remove('error');
-               element.classList.remove('success');
-            });
+      function editBtn(el) {
+         modalEdit.classList.add('show');
+         modalContainerEdit.classList.add('show');
+
+         const id = $(el).data('id');
+         $('.loader-wrapper').addClass('show');
+
+         $.ajax({
+            url: 'http://localhost:8080/MyProject/2021/comunity-project/my-archieve/views/ajax/dataEdit.php',
+            data: {
+               id: id
+            },
+            method: 'post',
+            dataType: 'json',
+            success: function(data) {
+               $('[data-sertifikat-edit]').attr('src', `assets/certificates/${data.gambar}`);
+               $('#idEdit').val(data.id);
+               $('#courseEdit').val(data.course);
+               $('#penyelenggaraEdit').val(data.penyelenggara);
+               $('#gambarLama').val(data.gambar);
+               $('.loader-wrapper').removeClass('show');
+            }
          });
-      });
+      }
+
+      function modalClose(el) {
+         modalTambah.classList.remove('show');
+         modalEdit.classList.remove('show');
+         modalContainer.forEach(element => {
+            element.classList.remove('show');
+         });
+         dataSertifikat.forEach(element => {
+            element.src = '';
+         });
+         errorMessage.forEach(element => {
+            element.classList.remove('show');
+         });
+         allInput.forEach(element => {
+            element.classList.remove('error');
+            element.classList.remove('success');
+         });
+      }
 
       formTambah.addEventListener('submit', (e) => {
          e.preventDefault();
@@ -176,7 +238,35 @@ if (isset($_POST["tambah"])) {
             }
             let formData = new FormData(formTambah);
             xhr.send(formData);
-         } 
+         }
+      });
+
+      modalFormEdit.addEventListener('submit', (e) => {
+         e.preventDefault();
+
+         const sertifikat = document.querySelector('[data-form-edit="sertifikat"]');
+         const course = document.querySelector('[data-form-edit="course"]');
+         const penyelenggara = document.querySelector('[data-form-edit="penyelenggara"]');
+
+         if (checkFormEdit(sertifikat, course, penyelenggara)) {
+            loaderWrapper.classList.add('show');
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "editData", true);
+            xhr.onload = () => {
+               if (xhr.readyState === 4 && xhr.status === 200) {
+                  let data = xhr.response;
+                  mainCertificates.innerHTML = data;
+                  loaderWrapper.classList.remove('show');
+                  modalEdit.classList.remove('show');
+                  modalFormEdit.querySelectorAll('input').forEach(el => {
+                     el.classList.remove('success');
+                     el.classList.remove('error');
+                  });
+               }
+            }
+            let formData = new FormData(modalFormEdit);
+            xhr.send(formData);
+         }
       });
 
       function checkFormReg(sertifikat, course, penyelenggara) {
@@ -219,6 +309,78 @@ if (isset($_POST["tambah"])) {
             return true;
          } else {
             return false;
+         }
+      }
+
+      function checkFormEdit(sertifikat, course, penyelenggara) {
+         const sertifikatValue = sertifikat.value.trim();
+         const courseValue = course.value.trim();
+         const penyelenggaraValue = penyelenggara.value.trim();
+
+         let numberValid = 0;
+
+         if (sertifikatValue !== "") {
+            setSuccess(sertifikat);
+            numberValid += 1;
+         } else {
+            setSuccess(sertifikat);
+            numberValid += 1;
+         }
+
+         if (courseValue === "") {
+            setError(course, "Course wajib diisi");
+         } else if (courseValue.length < 3) {
+            setError(course, "Course minimal 3 karakter");
+         } else if (courseValue.length > 100) {
+            setError(course, "Course maksimal 100 karakter");
+         } else {
+            setSuccess(course);
+            numberValid += 1;
+         }
+
+         if (penyelenggaraValue === "") {
+            setError(penyelenggara, "Penyelenggara wajib diisi");
+         } else if (penyelenggaraValue.length < 3) {
+            setError(penyelenggara, "Penyelenggara minimal 3 karakter");
+         } else if (penyelenggaraValue.length > 50) {
+            setError(penyelenggara, "Penyelenggara maksimal 50 karakter");
+         } else {
+            setSuccess(penyelenggara);
+            numberValid += 1;
+         }
+
+         if (numberValid == 3) {
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      function hapusData(el) {
+         const confirmData = confirm("Yakin?");
+         if (confirmData) {
+            loaderWrapper.classList.add('show');
+            const id = el.getAttribute('data-id');
+            const newForm = document.createElement('form');
+            const newInput = document.createElement('input');
+            newForm.setAttribute('class', 'absolute opacity-0 pointer-event-none form-hapus');
+            newInput.setAttribute('value', id);
+            newInput.setAttribute('name', 'id');
+            el.parentElement.appendChild(newForm);
+            const formHapus = document.querySelector('.form-hapus');
+            formHapus.appendChild(newInput);
+            console.log(id);
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "hapusData", true);
+            xhr.onload = () => {
+               if (xhr.readyState === 4 && xhr.status === 200) {
+                  let data = xhr.response;
+                  mainCertificates.innerHTML = data;
+                  loaderWrapper.classList.remove('show');
+               }
+            }
+            let formData = new FormData(formHapus);
+            xhr.send(formData);
          }
       }
 

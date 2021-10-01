@@ -32874,6 +32874,7 @@ html, body, #container {
 }
 
 .btn-edit {
+  cursor: pointer;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
   background-color: rgba(245, 158, 11, var(--tw-bg-opacity));
@@ -32893,7 +32894,7 @@ html, body, #container {
 
 .btn-edit:focus{
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgba(234, 109, 197, var(--tw-ring-opacity));
+  --tw-ring-color: rgba(245, 158, 11, var(--tw-ring-opacity));
 }
 
 .btn-edit{
@@ -32905,6 +32906,7 @@ html, body, #container {
 }
 
 .btn-delete {
+  cursor: pointer;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
   background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
@@ -32924,7 +32926,7 @@ html, body, #container {
 
 .btn-delete:focus{
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgba(234, 109, 197, var(--tw-ring-opacity));
+  --tw-ring-color: rgba(220, 38, 38, var(--tw-ring-opacity));
 }
 
 .btn-delete{

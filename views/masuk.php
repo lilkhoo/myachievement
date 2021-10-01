@@ -17,7 +17,7 @@ if (isset($_POST["login"])) {
       if (password_verify($password, $row["password"])) {
          $_SESSION["login"] = true;
          $_SESSION["username"] = $username;
-         header("Location: ../my-archieve");
+         header("Location: ../myachievement");
          exit;
       } else {
          echo "<script>
