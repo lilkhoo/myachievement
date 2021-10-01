@@ -1,4 +1,4 @@
-<?php 
+<?php
 require 'functions/functions.php';
 
 if (isset($_SESSION['login'])) {
