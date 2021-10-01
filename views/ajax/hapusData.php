@@ -26,7 +26,7 @@ if (mysqli_affected_rows($conn) > 0) { ?>
                </div>
                <div>
                   <button onclick="editData(this);" data-id="<?= $row['id']; ?>" class="btn-edit">Edit</button>
-                  <button class="btn-delete" onclick="modalClose();">Hapus</button>
+                  <button class="btn-delete" data-id="<?= $row['id']; ?>" onclick="hapusData(this);">Hapus</button>
                </div>
             </div>
          </div>

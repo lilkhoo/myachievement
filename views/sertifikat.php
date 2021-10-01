@@ -182,7 +182,7 @@ if (isset($_POST["tambah"])) {
          $('.loader-wrapper').addClass('show');
 
          $.ajax({
-            url: 'http://localhost:8080/MyProject/2021/comunity-project/my-archieve/views/ajax/dataEdit.php',
+            url: 'http://localhost:8080/MyProject/2021/comunity-project/myachievement/views/ajax/dataEdit.php',
             data: {
                id: id
             },
