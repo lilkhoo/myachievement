@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 if (!isset($_SESSION['login'])) {
    header("Location: masuk");
@@ -9,7 +9,7 @@ if (!isset($_SESSION['login'])) {
 
 <nav class="nav">
    <div class="nav__container">
-      <a href="../myachievement" class="nav__logo">
+      <a href="../" class="nav__logo">
          <i class='bx bx-award'></i>
       </a>
       <div class="nav__links-container">
