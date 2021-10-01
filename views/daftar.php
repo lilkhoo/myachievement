@@ -1,4 +1,4 @@
-<?php 
+<?php
 require 'functions/functions.php';
 
 if (isset($_SESSION['login'])) {
@@ -12,7 +12,7 @@ if (isset($_POST["register"])) {
       $_SESSION["username"] = $_POST["username"];
       echo "<script>
                alert('Anda berhasil registrasi!!'); 
-               document.location.href = '../my-archieve';
+               document.location.href = '../myachievement';
             </script>";
    } else {
       echo "<script>
