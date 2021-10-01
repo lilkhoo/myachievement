@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Viga&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #container {
+   @apply h-full;
+}
+
+.select {
+   @apply border focus:outline-none py-2 px-3 rounded-xl font-montserrat font-medium cursor-pointer;
+}
+
+.header {
+   @apply text-2xl font-montserrat font-bold text-my-dark;
+}
+
+.btn {
+   @apply py-2 px-5 bg-my-pink text-white font-montserrat text-center font-medium cursor-pointer rounded-md ring ring-offset-2 ring-transparent focus:ring-my-pink transition-all duration-300;
+
+   &-edit {
+      @apply py-2 font-medium px-5 bg-yellow-500 text-white text-center rounded-md ring ring-offset-2 ring-transparent focus:ring-my-pink transition-all duration-300;
+   }
+
+   &-delete {
+      @apply py-2 font-medium px-5 bg-red-600 text-white text-center rounded-md ring ring-offset-2 ring-transparent focus:ring-my-pink transition-all duration-300;
+   }
+
+   &-ghost {
+      @apply py-2 font-medium px-5 text-my-dark rounded-md ring ring-offset-2 ring-transparent;
+   }
+}
+
+.input {
+   @apply font-montserrat py-2 px-5 border rounded-md focus:outline-none w-full ring ring-offset-2 ring-transparent focus:ring-my-pink transition-all duration-300 sm:text-base text-sm;
+
+   &.error {
+      border-color: red;
+   }
+
+   &.success {
+      border-color: green;
+   }
+
+   &-field {
+      @apply space-y-2;
+   }
+
+   &-file {
+      @apply opacity-0 pointer-events-none invisible absolute;
+   }
+}
+
+.error-message {
+   @apply font-montserrat italic font-medium opacity-0 absolute pointer-events-none invisible;
+   color: red;
+
+   &.show {
+      @apply opacity-100 static pointer-events-auto visible;
+   }
+}
+
+.bg-sign {
+   @apply flex justify-center items-center h-full;
+   background: hsl(220, 0%, 95%);
+}
+
+.loader-wrapper {
+   @apply fixed inset-0 flex justify-center items-center bg-white bg-opacity-20 backdrop-filter backdrop-blur-md opacity-0 pointer-events-none invisible transition-all duration-300;
+   z-index: 999999;
+
+   &.show {
+      @apply opacity-100 visible pointer-events-auto;
+   }
+}
+
+.lds-ellipsis {
+   display: inline-block;
+   position: relative;
+   width: 80px;
+   height: 80px;
+}
+
+.lds-ellipsis div {
+   position: absolute;
+   top: 33px;
+   width: 13px;
+   height: 13px;
+   border-radius: 50%;
+   background: #000;
+   animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+   left: 8px;
+   animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+   left: 8px;
+   animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+   left: 32px;
+   animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+   left: 56px;
+   animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+   0% {
+      transform: scale(0);
+   }
+
+   100% {
+      transform: scale(1);
+   }
+}
+
+@keyframes lds-ellipsis3 {
+   0% {
+      transform: scale(1);
+   }
+
+   100% {
+      transform: scale(0);
+   }
+}
+
+@keyframes lds-ellipsis2 {
+   0% {
+      transform: translate(0, 0);
+   }
+
+   100% {
+      transform: translate(24px, 0);
+   }
+}
+
+.nav {
+   @apply sticky top-0 bg-white grid grid-cols-12 gap-6 py-3;
+   z-index: 9999;
+
+   &__container {
+      @apply flex col-span-10 col-start-2 justify-between items-center;
+   }
+
+   &__logo {
+      @apply h-10 w-10  flex justify-center items-center rounded-2xl text-white;
+      background-image: linear-gradient(to bottom left, #EA6DC5, #CB89F3); 
+      box-shadow: 0 24px 25px -10px rgba(234, 109, 197, 0.38);
+   }
+
+   &__link {
+      @apply hover:text-my-pink transition-all duration-300 text-sm;
+
+      &.active {
+         @apply text-my-pink;
+
+         &::after  {
+            @apply w-10/12;
+         }
+      }
+
+      &::after {
+         content: '';
+         @apply block bg-my-pink h-0.5 rounded-full w-0 mx-auto transition-all duration-300;
+      }
+
+      &:hover::after {
+         @apply w-11/12;
+      }
+
+      &s {
+         @apply flex items-center gap-6 font-montserrat font-semibold text-my-dark;
+
+         &-container {
+            @apply flex items-center gap-10;
+         }
+      }
+   }
+
+   &__profile {
+      &-container {
+         @apply relative;
+      }
+
+      &-img {
+         @apply h-10 w-10 object-cover object-center rounded-full cursor-pointer;
+         min-height: 2.5rem;
+         min-width: 2.5rem;
+         max-width: 2.5rem;
+         max-height: 2.5rem;
+      }
+
+      &-img:hover + &-links {
+         @apply pointer-events-auto visible opacity-100;
+      }
+
+      &-link {
+         @apply flex items-center gap-1 hover:text-my-pink transition-all duration-200;
+
+         &s {
+            @apply absolute flex flex-col gap-1 font-montserrat font-medium bg-white py-3 px-5 right-0 rounded-md w-44 text-my-dark opacity-0 pointer-events-none invisible transition-all duration-300;
+            box-shadow: 0 5px 30px rgba(234, 109, 197, 0.15);
+
+            &:hover {
+               @apply pointer-events-auto visible opacity-100;
+            }
+         }
+
+         &-icon {
+            @apply text-lg;
+         }
+      }
+   }
+}
+
+.main {
+   @apply grid grid-cols-12 gap-6 py-10;
+
+   &__container {
+      @apply col-span-10 col-start-2 space-y-6;
+   }
+
+   &__certificate {
+      @apply space-y-4;
+
+      &s {
+         @apply grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6;
+      }
+
+      &-img {
+         @apply rounded-xl;
+      }
+
+      &-detail {
+         @apply font-montserrat space-y-3 border-b pb-4;
+      }
+
+      &-header {
+         @apply flex flex-col;
+      }
+
+      &-course {
+         @apply font-bold text-lg text-my-dark capitalize;
+      }
+
+      &-user {
+         @apply text-my-pink font-medium hover:underline max-w-max;
+      }
+
+      &-from {
+         @apply hover:underline font-medium text-my-dark inline-block;
+      }
+   }
+}
+
+.modal {
+   @apply fixed inset-0 bg-black bg-opacity-20 backdrop-filter backdrop-blur-md flex justify-center items-center opacity-0 pointer-events-none invisible transition-all duration-300;
+   z-index: 99999;
+
+   &.show {
+      @apply opacity-100 pointer-events-auto visible;
+   }
+
+   &__container {
+      @apply w-96 bg-white py-8 px-6 rounded-md opacity-0 transform -translate-y-5 transition-all duration-300;
+      box-shadow: 0 5px 30px rgba(234, 109, 197, 0.15);
+
+      &.show {
+         @apply translate-y-0 opacity-100;
+      }
+   }
+
+   &__form {
+      @apply space-y-3;
+   }
+
+   &__up-img {
+      @apply object-cover w-full object-center rounded-md;
+      max-height: 200px;
+   }
+}
+
+.akun {
+   @apply grid sm:col-span-8 col-span-10 sm:col-start-3 col-start-2 space-y-6;
+
+   &__form {
+      @apply space-y-6;
+
+      &-img {
+         @apply space-y-2;
+      }
+
+      &-label {
+         @apply text-lg font-montserrat font-bold text-my-dark;
+      }
+   }
+
+   &__img {
+      @apply w-36 h-36 object-center object-cover rounded-md border-2 border-my-pink p-1 border-dashed;
+
+      &-container {
+         @apply flex gap-2;
+      }
+   }
+
+   &__pass {
+      @apply font-montserrat flex gap-2 items-center;
+   }
+}
+
+.sign {
+   &__container {
+      @apply w-96 flex flex-col items-center gap-8; 
+   }
+
+   &__logo {
+      @apply h-16 w-16  flex justify-center items-center rounded-2xl text-white;
+      background-image: linear-gradient(to bottom left, #EA6DC5, #CB89F3); 
+      box-shadow: 0 24px 25px -10px rgba(234, 109, 197, 0.38);
+
+      &-icon {
+         @apply text-3xl;
+      }
+   }
+
+   &__form {
+      @apply space-y-3 bg-white py-4 px-6 rounded-md;
+   }
+
+   &__label {
+      @apply font-montserrat font-bold text-my-dark sm:text-sm text-xs;
+   }
+
+   &__remember-me {
+      @apply flex justify-between items-center;
+
+      &-container {
+         @apply font-montserrat flex items-center gap-1;
+      }
+   }
+
+   &__btn {
+      @apply flex gap-2 items-center;
+   }
+
+   &__redirect {
+      @apply text-sm font-montserrat hover:underline;
+   }
+}
+
+.profile {
+   &__top {
+      @apply sm:space-y-0 space-y-5;
+   }
+
+   &__container {
+      @apply flex flex-col items-center justify-center text-center;
+   }
+
+   &__search {
+      @apply font-montserrat flex gap-2 items-center;
+   }
+
+   &__filter {
+      @apply flex sm:flex-row flex-col sm:gap-0 gap-2 justify-between sm:items-center;
+   }
+
+   &__img {
+      @apply w-36 h-36 object-center object-cover rounded-full border-2 border-my-pink p-1 border-dashed;
+   }
+
+   &__name {
+      @apply font-bold font-montserrat text-xl text-my-dark;
+   }
+
+   &__username {
+      @apply font-montserrat text-my-pink font-medium;
+   }
+}
+
+.sertifikat {
+   &__top {
+      @apply space-y-5;
+   }
+}
+
+.user {
+   @apply grid sm:col-span-8 col-span-10 sm:col-start-3 col-start-2 space-y-6;
+
+   &__search {
+      @apply font-montserrat flex gap-2 items-center;
+   }
+
+   &__recomendation {
+      @apply space-y-2;
+   }
+
+   &__container {
+      @apply space-y-4;
+   }
+
+   &__card {
+      @apply flex gap-3;
+   }
+
+   &__img {
+      @apply relative max-w-max;
+      z-index: -1;
+   }
+
+   &__pic {
+      @apply w-28 h-28 min-w-7rem max-w-7rem min-h-7rem max-h-7rem object-center object-cover rounded-full border-2 border-my-pink p-1 border-dashed;
+   }
+
+   &__detail {
+      @apply font-montserrat flex flex-col justify-between;
+   }
+
+   &__name {
+      @apply text-lg font-bold text-my-dark;
+   }
+
+   &__username {
+      @apply inline-block max-w-max hover:underline text-my-pink;
+   }
+
+   &__peringkat {
+      @apply h-10 w-10  flex justify-center items-center rounded-2xl text-white absolute bottom-0 right-0;
+      background-image: linear-gradient(to bottom left, #EA6DC5, #CB89F3); 
+      box-shadow: 0 24px 25px -10px rgba(234, 109, 197, 0.38);
+
+      &-detail {
+         @apply font-montserrat font-bold;
+      }
+   }
+}
+
+.peringkat {
+   &__top {
+      @apply space-y-2;
+   }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "sertifikat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "postcss.config.js",
+  "dependencies": {
+    "autoprefixer": "^10.3.6",
+    "postcss": "^8.3.8",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/css/style.css -o ./dist/css/style.css"
+  },
+  "author": "",
+  "license": "ISC"
+}
