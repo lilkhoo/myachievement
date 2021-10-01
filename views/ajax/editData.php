@@ -21,7 +21,7 @@ if ($_FILES['gambar']['error'] === 4) {
    $gambar = uploadGambar("sertifikat");
 }
 
-if ($course != $courseLama || $penyelenggara != $penyelenggaraLama) {
+if ($course != $courseLama || $penyelenggara != $penyelenggaraLama || $_FILES['gambar']['name'] != $gambarLama) {
    $query = "UPDATE tb_sertifikat SET course = '$course', penyelenggara = '$penyelenggara', gambar='$gambar' WHERE id = $id;";
    mysqli_query($conn, $query);
 
