@@ -47,7 +47,7 @@ $dataSertifikat = query("SELECT * FROM tb_sertifikat WHERE username = '$username
                <?php if (count($dataSertifikat) > 0) { ?>
                   <?php foreach ($dataSertifikat as $row) { ?>
                      <div class="main__certificate">
-                        <img class="main__certificate-img" src="assets/img/<?= $row['gambar']; ?>" alt="<?= $row['course']; ?>">
+                        <img class="main__certificate-img" src="assets/certificates/<?= $row['gambar']; ?>" alt="<?= $row['course']; ?>">
                         <div class="main__certificate-detail">
                            <div class="main__certificate-header">
                               <h3 class="main__certificate-course"><?= $row['course']; ?></h3>

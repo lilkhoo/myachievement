@@ -1,22 +1,9 @@
-<?php require 'functions/functions.php'; ?>
-
 <?php
 
-$username = $_SESSION['username'];
-$dataSertifikat = query("SELECT * FROM tb_sertifikat WHERE username = '$username'");
+require 'functions/functions.php';
 
-if (isset($_POST["tambah"])) {
-   if (tambahSertifikat($_POST) > 0) {
-      echo "<script>
-               alert('Hebat'); 
-               document.location.href='sertifikat';
-            </script>";
-   } else {
-      echo "<script>
-               alert('Coba Cek Lagi Deh');
-            </script>";
-   }
-}
+$username = $_SESSION['username'];
+$dataSertifikat = query("SELECT * FROM tb_sertifikat WHERE username = '$username' ORDER BY id DESC");
 
 ?>
 
@@ -36,21 +23,20 @@ if (isset($_POST["tambah"])) {
          <div class="main__container">
             <div class="sertifikat__top">
                <h1 class="header">Sertifikat Saya</h1>
-               <button class="btn" id="btn-tambah">Tambah</button>
+               <button type="button" class="btn" id="btn-tambah">Tambah</button>
                <div class="profile__filter">
                   <div>
-                     <select class="select" name="" id="">
-                        <option value="">Terbaru</option>
-                        <option value="">Terlama</option>
+                     <select class="select" name="selectWaktu" id="selectWaktu">
+                        <option value="desc">Terbaru</option>
+                        <option value="asc">Terlama</option>
                      </select>
                   </div>
-                  <div class="profile__search">
-                     <input class="input" type="text" name="" id="" placeholder="Cari sertifikat...">
-                     <button class="btn">Cari</button>
-                  </div>
+                  <form method="post" action="" class="profile__search">
+                     <input class="input" type="text" name="cariData" id="cariData" placeholder="Cari sertifikat...">
+                  </form>
                </div>
             </div>
-            <div class="main__certificates">
+            <div class="main__certificates relative">
                <?php if (count($dataSertifikat) > 0) { ?>
                   <?php foreach ($dataSertifikat as $row) { ?>
                      <div class="main__certificate">
@@ -74,6 +60,14 @@ if (isset($_POST["tambah"])) {
                <?php } else { ?>
                   <h1 class="header">Data Kosong!!</h1>
                <?php } ?>
+               <div class="loader-wrapper-2">
+                  <div class="lds-ellipsis">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                  </div>
+               </div>
             </div>
          </div>
       </section>
@@ -141,6 +135,45 @@ if (isset($_POST["tambah"])) {
    </div>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="dist/js/sertifikat.js"></script>
+   <script>
+      $("#cariData").on('input', function() {
+         $('.loader-wrapper-2').addClass('show');
+         const keyword = document.querySelector('#cariData').value;
+         const waktu = document.querySelector('#selectWaktu').value;
+
+         $.ajax({
+            url: 'http://localhost:8080/MyProject/2021/comunity-project/myachievement/views/ajax/cariData.php',
+            data: {
+               keyword: keyword,
+               waktu: waktu,
+            },
+            method: 'post',
+            success: function(data) {
+               $('.main__certificates').html(data);
+               $('.loader-wrapper').removeClass('show');
+            }
+         })
+      });
+
+      $("#selectWaktu").on('change', function() {
+         $('.loader-wrapper-2').addClass('show');
+         const keyword = document.querySelector('#cariData').value;
+         const waktu = document.querySelector('#selectWaktu').value;
+
+         $.ajax({
+            url: 'http://localhost:8080/MyProject/2021/comunity-project/myachievement/views/ajax/cariData.php',
+            data: {
+               keyword: keyword,
+               waktu: waktu,
+            },
+            method: 'post',
+            success: function(data) {
+               $('.main__certificates').html(data);
+               $('.loader-wrapper').removeClass('show');
+            }
+         })
+      });
+   </script>
 </body>
 
 </html>

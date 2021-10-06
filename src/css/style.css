@@ -73,6 +73,16 @@ html, body, #container {
   @apply opacity-100 visible pointer-events-auto;
 }
 
+.loader-wrapper-2 {
+  @apply inset-0 flex justify-center items-center bg-white bg-opacity-20 backdrop-filter backdrop-blur-md opacity-0 pointer-events-none invisible transition-all duration-300;
+  z-index: 999999;
+  position: absolute;
+}
+
+.loader-wrapper-2.show {
+  @apply opacity-100 visible pointer-events-auto;
+}
+
 .lds-ellipsis {
   display: inline-block;
   position: relative;

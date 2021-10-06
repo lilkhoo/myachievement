@@ -25,7 +25,7 @@ if (mysqli_affected_rows($conn) > 0) { ?>
                   <a class="main__certificate-from" href="#" target="_blank" rel="noopener noreferrer"><?= $row['penyelenggara']; ?></a>
                </div>
                <div>
-                  <button onclick="editData(this);" data-id="<?= $row['id']; ?>" class="btn-edit">Edit</button>
+                  <button onclick="editBtn(this);" data-id="<?= $row['id']; ?>" class="btn-edit">Edit</button>
                   <button class="btn-delete" data-id="<?= $row['id']; ?>" onclick="hapusData(this);">Hapus</button>
                </div>
             </div>
@@ -34,6 +34,14 @@ if (mysqli_affected_rows($conn) > 0) { ?>
    <?php } else { ?>
       <h1 class="header">Data Kosong!!</h1>
    <?php } ?>
+   <div class="loader-wrapper-2">
+      <div class="lds-ellipsis">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div>
+      </div>
+   </div>
 <?php } else {
    echo "<script>
 			   alert('GAGAL menghapus sertifikat!!');
@@ -53,7 +61,7 @@ if (mysqli_affected_rows($conn) > 0) { ?>
                   <a class="main__certificate-from" href="#" target="_blank" rel="noopener noreferrer"><?= $row['penyelenggara']; ?></a>
                </div>
                <div>
-                  <button onclick="editData(this);" data-id="<?= $row['id']; ?>" class="btn-edit">Edit</button>
+                  <button onclick="editBtn(this);" data-id="<?= $row['id']; ?>" class="btn-edit">Edit</button>
                   <button class="btn-delete" onclick="modalClose();">Hapus</button>
                </div>
             </div>
@@ -62,4 +70,12 @@ if (mysqli_affected_rows($conn) > 0) { ?>
    <?php } else { ?>
       <h1 class="header">Data Kosong!!</h1>
    <?php } ?>
+   <div class="loader-wrapper-2">
+      <div class="lds-ellipsis">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div>
+      </div>
+   </div>
 <?php } ?>
